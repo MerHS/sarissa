@@ -3,8 +3,7 @@
     "babel": "babelrc",
     "options": [
       "scripts",
-      "SFC",
-      "wallabyjs"
+      "SFC"
     ]
   },
   "@quasar/testing": {

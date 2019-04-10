@@ -1,5 +1,5 @@
-import { Coord, NoteIndex, Rect, EditMode, Note, LaneIndex } from '../../utils/types/scoreTypes';
-import Fraction from '../../utils/fraction';
+import { Coord, NoteIndex, Rect, EditMode, Note, LaneIndex } from 'utils/types/scoreTypes';
+import Fraction from 'utils/fraction';
 import { RootState } from '..';
 import { EditorState } from '.';
 
@@ -155,7 +155,7 @@ export const getters: GetterTree<EditorState, RootState> = {
     return (yPixel: number) => {
       const yPulse = yPixelToPulse(yPixel);
       
-      let measureIndex = measurePulseList.binaryFindFloorIndex(yPulse);
+      let measureIndex = measurePulseList.binaryFindIndexN(yPulse);
       if (measureIndex < 0) {
         measureIndex = 0;
       }

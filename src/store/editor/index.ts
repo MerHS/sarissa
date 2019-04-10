@@ -1,14 +1,15 @@
 /* eslint-disable no-unused-vars */
 
-import { Coord, NoteIndex, Rect, EditMode, Note, LaneIndex } from '../../utils/types/scoreTypes';
+import { Coord, NoteIndex, Rect, EditMode, Note, LaneIndex } from 'utils/types/scoreTypes';
 import { MP_LEN, MP_POS, ScoreGetters, MeasureFracPos } from './score';
-import Fraction from '../../utils/fraction';
+import Fraction from 'utils/fraction';
 import { RootState } from '..';
 
 import { theme, ThemeState, ThemeGetters } from './theme';
 import { panel, PanelState  } from './panel';
 import { note, NoteState } from './note';
 import { score, MeasurePulsePos, ScoreState } from './score';
+
 import * as R from 'ramda';
 import { MutationTree, ActionTree, GetterTree, Module } from 'vuex';
 import { getters, EditorGetters } from './EditorGetters';
@@ -127,7 +128,7 @@ const actions: ActionTree<EditorState, RootState> = {
     const yPixelToGridPulse = getters.yPixelToGridPulse;
 
     const pulse = yPixelToGridPulse(coord[1]);
-    const laneIndex = getters.laneXList.binaryFindFloorIndex(coord[0]);
+    const laneIndex = getters.laneXList.binaryFindIndexN(coord[0]);
     
     if (laneIndex != null) {
       commit('setPreviewNoteStyle', { pulse, laneIndex });

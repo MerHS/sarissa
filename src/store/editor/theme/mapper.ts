@@ -1,11 +1,11 @@
 //  
 import * as R from 'ramda';
 
-import { defaultGridColor, defaultLaneStyle } from '../../../utils/themeConst';
+import { defaultGridColor, defaultLaneStyle } from 'utils/themeConst';
 import {
   GridColors, LaneStyleSettings, LaneStyleSettingPart,
   LaneStylePreset, LaneTheme, LaneStyles, LaneStylePart,
-} from '../../../utils/types/themeTypes';
+} from 'utils/types/themeTypes';
 
 const defaultLaneStylePreset: LaneStylePreset = {
   defaultStyle: defaultLaneStyle,

@@ -1,8 +1,8 @@
 /* eslint-disable no-unused-vars */
 
-import { Coord, NoteIndex, Rect, EditMode, Note, LaneIndex } from '../../utils/types/scoreTypes';
+import { Coord, NoteIndex, Rect, EditMode, Note, LaneIndex } from 'utils/types/scoreTypes';
 import { MP_LEN, MP_POS, ScoreGetters, MeasureFracPos } from './score';
-import Fraction from '../../utils/fraction';
+import Fraction from 'utils/fraction';
 import { RootState } from '..';
 
 import { theme, ThemeState, ThemeGetters } from './theme';

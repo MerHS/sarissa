@@ -1,7 +1,7 @@
 <template>
   <q-page class="flex flex-center">
-    <router-link to="/test">
-      <img alt="Quasar logo" src="~assets/quasar-logo-full.svg">
+    <router-link to="/">
+      <img alt="Quasar 3" src="~assets/sad.svg">
     </router-link>
   </q-page>
 </template>
@@ -11,6 +11,6 @@
 
 <script>
 export default {
-  name: 'PageIndex'
+  name: 'Tester'
 }
 </script>

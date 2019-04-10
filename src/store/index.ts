@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Vuex, { StoreOptions } from 'vuex';
 
-import { createIpcVuexListenerPlugin } from '../ipc/ipcVuexPlugin';
+import { createIpcVuexListenerPlugin } from 'src/ipc/ipcVuexPlugin';
 import { editor } from './editor';
 
 Vue.use(Vuex);

@@ -9,10 +9,8 @@ function extendTypescriptToWebpack(cfg) {
     loader: 'ts-loader',
     options: { appendTsSuffixTo: [/\.vue$/] },
   });
-  // cfg.resolve.alias = {
-  //   utils: path.resolve(__dirname, 'src/utils'),
-  //   store: path.resolve(__dirname, 'src/store'),
-  // };
+  cfg.resolve.alias.utils = path.resolve(__dirname, 'src/utils');
+  cfg.resolve.alias.store = path.resolve(__dirname, 'src/store');
 }
 
 module.exports = function (ctx) {

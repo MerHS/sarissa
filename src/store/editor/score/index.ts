@@ -2,13 +2,13 @@
  * editor/score - score settings
  */
 
-import Fraction from '../../../utils/fraction';
-import { NoteManager } from '../../../utils/noteUtil';
+import Fraction from 'utils/fraction';
+import { NoteManager } from 'utils/noteUtil';
 import {
   Beat, EventType, NoteIndex, NoteType, ScoreMetaData,
   SoundIndex, SoundSprite, SoundType, TimeSignature,
-} from '../../../utils/types/scoreTypes';
-import { RootState } from '../..';
+} from 'utils/types/scoreTypes';
+import { RootState } from 'src/store';
 
 import * as _ from 'lodash';
 import * as R from 'ramda';

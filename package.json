@@ -39,7 +39,8 @@
     "strip-ansi": "=3.0.1",
     "ts-loader": "^5.3.3",
     "ts-node": "^8.0.3",
-    "typescript": "^3.4.2"
+    "typescript": "^3.4.2",
+    "vuex-module-decorators": "^0.9.8"
   },
   "engines": {
     "node": ">= 8.9.0",

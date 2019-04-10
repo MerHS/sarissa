@@ -18,11 +18,16 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { mapGetters, mapState } from 'vuex';
+import Component from 'vue-class-component';
 
 import NoteWrapper from './NoteWrapper.vue';
 import TimelineCanvas from './TimelineCanvas.vue';
 import TimelineSvg from './TimelineSvg.vue';
+
+// @Component
+// export class EditorLayout extends Vue {
+//   @editor.Getter('widthPixel') widthPixel!: number;
+// }
 
 export default Vue.extend({
   data: () => ({

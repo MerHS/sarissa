@@ -4,7 +4,7 @@
 
 import { Module, MutationTree } from 'vuex';
 
-import { RootState } from '../..';
+import { RootState } from 'src/store';
 
 export interface PanelState {
   panelCount: number;

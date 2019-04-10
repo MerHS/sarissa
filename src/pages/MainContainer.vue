@@ -5,12 +5,15 @@
 </template>
 
 <script lang="ts">
-  import Vue from 'vue';
-  import EditorLayout from './layout/editor/EditorLayout.vue';
+import { Component, Vue } from 'vue-property-decorator';
 
-  export default Vue.extend({
-    components: { EditorLayout },
-  });
+import EditorLayout from '../layouts/editor/EditorLayout.vue';
+
+@Component({ 
+  components: { EditorLayout },
+})
+export default class MainContainer extends Vue {
+}
 </script>
 
 <style lang="stylus">

@@ -82,21 +82,21 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from 'vue-property-decorator';
 import { openURL } from 'quasar';
+import { Component, Prop, Vue } from 'vue-property-decorator';
 
 @Component
 export default class MyLayout extends Vue {
   @Prop({ default: 'MyLayout' }) readonly name!: string;
-  
+
   leftDrawerOpen = this.$q.platform.is.desktop;
 
-  openURL(url: string) { 
-    openURL(url); 
+  openURL(url: string) {
+    openURL(url);
   }
 
   toolbarClick() {
-    console.log('clicked');
+    console.log(this.$q.version);
     this.leftDrawerOpen = !this.leftDrawerOpen;
   }
 }

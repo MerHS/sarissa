@@ -5,9 +5,15 @@
         "strict": true,
         "experimentalDecorators": true,
         "module": "es2015",
-        "moduleResolution": "node"
+        "moduleResolution": "node",
+        "baseUrl": ".",
+        "paths": {
+            "utils/*": ["src/utils/*"],
+            "store/*": ["src/store/*"]
+        }
     },
     "include": [
-        "./src/**/*"
+        "./src/**/*",
+        "./@types/**/*"
     ]
 }

@@ -17,8 +17,8 @@ export function laneStateMapper(
 ): LaneStylePart {
   const defaultStyle: LaneStylePart = stylePreset.defaultStyle ? stylePreset.defaultStyle : defaultLaneStyle;
   const laneStyle: Partial<LaneStylePart> = stylePreset[styleSetting[1]] ? stylePreset[styleSetting[1]] : {};
-  const mergedStyle: LaneStylePart = R.mergeRight(defaultStyle, laneStyle);
-  const mergedOption: LaneStylePart = styleSetting[2] != null ? R.merge(mergedStyle, styleSetting[2]) : mergedStyle;
+  const mergedStyle: LaneStylePart = Object.assign({}, defaultStyle, laneStyle);
+  const mergedOption: LaneStylePart = styleSetting[2] != null ? R.mergeRight(mergedStyle, styleSetting[2]) : mergedStyle;
 
   return R.merge(mergedOption, { caption: styleSetting[0] });
 }

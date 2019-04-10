@@ -1,5 +1,5 @@
 //  
-import R from 'ramda';
+import * as R from 'ramda';
 
 import { defaultGridColor, defaultLaneStyle } from '../../../utils/themeConst';
 import {
@@ -15,11 +15,10 @@ export function laneStateMapper(
   styleSetting: LaneStyleSettingPart,
   stylePreset: LaneStylePreset,
 ): LaneStylePart {
-  const
-    defaultStyle = stylePreset.defaultStyle ? stylePreset.defaultStyle : defaultLaneStyle,
-    laneStyle = stylePreset[styleSetting[1]] ? stylePreset[styleSetting[1]] : {},
-    mergedStyle = R.merge(defaultStyle, laneStyle),
-    mergedOption = styleSetting[2] != null ? R.merge(mergedStyle, styleSetting[2]) : mergedStyle;
+  const defaultStyle: LaneStylePart = stylePreset.defaultStyle ? stylePreset.defaultStyle : defaultLaneStyle;
+  const laneStyle: Partial<LaneStylePart> = stylePreset[styleSetting[1]] ? stylePreset[styleSetting[1]] : {};
+  const mergedStyle: LaneStylePart = R.mergeRight(defaultStyle, laneStyle);
+  const mergedOption: LaneStylePart = styleSetting[2] != null ? R.merge(mergedStyle, styleSetting[2]) : mergedStyle;
 
   return R.merge(mergedOption, { caption: styleSetting[0] });
 }

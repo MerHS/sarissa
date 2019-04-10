@@ -1,12 +1,18 @@
+let path = require('path');
+
 // Configuration for your app
 function extendTypescriptToWebpack(cfg) {
   // added the type-script supports
-  cfg.resolve.extensions.push('.ts')
+  cfg.resolve.extensions.push('.ts');
   cfg.module.rules.push({
     test: /\.ts$/,
     loader: 'ts-loader',
-    options: { appendTsSuffixTo: [/\.vue$/] }
-  })
+    options: { appendTsSuffixTo: [/\.vue$/] },
+  });
+  // cfg.resolve.alias = {
+  //   utils: path.resolve(__dirname, 'src/utils'),
+  //   store: path.resolve(__dirname, 'src/store'),
+  // };
 }
 
 module.exports = function (ctx) {

@@ -1,5 +1,5 @@
-import { Coord, NoteIndex, Rect, EditMode, Note, LaneIndex } from 'utils/types/scoreTypes';
-import Fraction from 'utils/fraction';
+import { Coord, NoteIndex, Rect, EditMode, Note, LaneIndex } from '../../utils/types/scoreTypes';
+import Fraction from '../../utils/fraction';
 import { RootState } from '..';
 import { EditorState } from '.';
 

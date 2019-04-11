@@ -4,9 +4,9 @@
  */
 import { Module } from 'vuex';
 
+import { RootState } from 'src/store';
 import { colorStr, cyan, green, red } from 'utils/themeConst';
 import { ColorString } from 'utils/types/themeTypes';
-import { RootState } from 'src/store';
 
 export interface NoteState {
   noteHeight: number;

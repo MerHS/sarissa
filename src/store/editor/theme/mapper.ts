@@ -1,10 +1,9 @@
-//  
 import * as R from 'ramda';
 
 import { defaultGridColor, defaultLaneStyle } from 'utils/themeConst';
 import {
-  GridColors, LaneStyleSettings, LaneStyleSettingPart,
-  LaneStylePreset, LaneTheme, LaneStyles, LaneStylePart,
+  GridColors, LaneStylePart, LaneStylePreset,
+  LaneStyles, LaneStyleSettingPart, LaneStyleSettings, LaneTheme,
 } from 'utils/types/themeTypes';
 
 const defaultLaneStylePreset: LaneStylePreset = {
@@ -18,7 +17,8 @@ export function laneStateMapper(
   const defaultStyle: LaneStylePart = stylePreset.defaultStyle ? stylePreset.defaultStyle : defaultLaneStyle;
   const laneStyle: Partial<LaneStylePart> = stylePreset[styleSetting[1]] ? stylePreset[styleSetting[1]] : {};
   const mergedStyle: LaneStylePart = Object.assign({}, defaultStyle, laneStyle);
-  const mergedOption: LaneStylePart = styleSetting[2] != null ? R.mergeRight(mergedStyle, styleSetting[2]) : mergedStyle;
+  const mergedOption: LaneStylePart = styleSetting[2] != null ?
+                                          R.mergeRight(mergedStyle, styleSetting[2]) : mergedStyle;
 
   return R.merge(mergedOption, { caption: styleSetting[0] });
 }

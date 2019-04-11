@@ -1,5 +1,5 @@
-import { LaneStylePreset, LaneStyleSettings, LaneTheme, LaneStyleSettingPart } from 'utils/types/themeTypes';
-import { colorStr, transparent, cyan, red, defaultLaneStyle } from 'utils/themeConst';
+import { colorStr, cyan, defaultLaneStyle, red, transparent } from 'utils/themeConst';
+import { LaneStylePreset, LaneStyleSettings, LaneTheme } from 'utils/types/themeTypes';
 import { laneStateListToTheme } from './mapper';
 
 const iidxLaneStylePreset: LaneStylePreset = {

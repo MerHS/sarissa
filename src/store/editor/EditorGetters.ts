@@ -1,25 +1,23 @@
-import { Coord, NoteIndex, Rect, EditMode, Note, LaneIndex } from 'utils/types/scoreTypes';
 import Fraction from 'utils/fraction';
-import { RootState } from '..';
 import { EditorState } from '.';
+import { RootState } from '..';
 
-import { MP_LEN, MP_POS, ScoreGetters, MeasureFracPos, MeasurePulsePos, ScoreState } from './score';
-import { ThemeState, ThemeGetters } from './theme';
-import { PanelState  } from './panel';
 import { NoteState } from './note';
+import { PanelState  } from './panel';
+import { MeasureFracPos, MeasurePulsePos, MP_POS, ScoreGetters, ScoreState } from './score';
+import { ThemeGetters, ThemeState } from './theme';
 
 import * as R from 'ramda';
 import { GetterTree } from 'vuex';
 
-
 export interface CanvasInfo {
   widthPixel: number;
   heightPixel: number;
-  laneXList: Array<number>;
-  laneEditableList: Array<boolean>;
-  measureYList: Array<number>; // TODO: array to calculation function
-  mainGridYList: Array<number>; // TODO: array to calculation function
-  subGridYList: Array<number>; // TODO: array to calculation function
+  laneXList: number[];
+  laneEditableList: boolean[];
+  measureYList: number[]; // TODO: array to calculation function
+  mainGridYList: number[]; // TODO: array to calculation function
+  subGridYList: number[]; // TODO: array to calculation function
 }
 
 export interface EditorGetters extends CanvasInfo, ScoreGetters, ThemeGetters {
@@ -56,20 +54,18 @@ export const getters: GetterTree<EditorState, RootState> = {
     return laneStyles.map(style => style.editGroup >= 0);
   },
   measureYList(state: EditorState, getters: EditorGetters): CanvasInfo['measureYList'] {
-    const
-      measurePulsePosList: Array<MeasurePulsePos> = getters.measurePulsePosList,
-      pulseToYPixel: (pulse: number) => number = getters.pulseToYPixel;
+    const measurePulsePosList: MeasurePulsePos[] = getters.measurePulsePosList;
+    const pulseToYPixel: (pulse: number) => number = getters.pulseToYPixel;
 
     return measurePulsePosList.map(pulse => pulseToYPixel(pulse[MP_POS]));
   },
   mainGridYList(_state: EditorState, getters: EditorGetters): CanvasInfo['mainGridYList'] {
     const state = _state as EditorGetterState;
-    const
-      mainFrac = new Fraction(1, state.panel.mainGrid),
-      resolution: number = getters.resolution,
-      measureFracPosList: Array<MeasureFracPos> = getters.measureFracPosList,
-      pulseToYPixel: (pulse: number) => number = getters.pulseToYPixel;
-    
+    const mainFrac = new Fraction(1, state.panel.mainGrid);
+    const resolution: number = getters.resolution;
+    const measureFracPosList: MeasureFracPos[] = getters.measureFracPosList;
+    const pulseToYPixel: (pulse: number) => number = getters.pulseToYPixel;
+
     // R.chain === _.flatMap
     return R.chain(([no, len, pos]) => {
       const gridCount = len.div(mainFrac).floorValue();
@@ -82,11 +78,10 @@ export const getters: GetterTree<EditorState, RootState> = {
   },
   subGridYList(_state: EditorState, getters: EditorGetters): CanvasInfo['subGridYList'] {
     const state = _state as EditorGetterState;
-    const
-      subFrac = new Fraction(1, state.panel.subGrid),
-      resolution: number = getters.resolution,
-      measureFracPosList: Array<MeasureFracPos> = getters.measureFracPosList,
-      pulseToYPixel: (pulse: number) => number = getters.pulseToYPixel;
+    const subFrac = new Fraction(1, state.panel.subGrid);
+    const resolution: number = getters.resolution;
+    const measureFracPosList: MeasureFracPos[] = getters.measureFracPosList;
+    const pulseToYPixel: (pulse: number) => number = getters.pulseToYPixel;
 
     // R.chain === _.flatMap
     return R.chain(([no, len, pos]) => {
@@ -100,19 +95,17 @@ export const getters: GetterTree<EditorState, RootState> = {
   },
   widthPixel(_state: EditorState, getters: EditorGetters): CanvasInfo['widthPixel'] {
     const state = _state as EditorGetterState;
-    const
-      totalWidth: number = getters.totalWidth,
-      horizontalZoom = state.panel.horizontalZoom;
+    const totalWidth: number = getters.totalWidth;
+    const horizontalZoom = state.panel.horizontalZoom;
 
     return totalWidth * horizontalZoom;
   },
   heightPixel(_state: EditorState, getters: EditorGetters): CanvasInfo['heightPixel'] {
     const state = _state as EditorGetterState;
-    const
-      resolution: number = getters.resolution,
-      maxPulse: number = getters.maxPulse,
-      defaultHeight = state.panel.defaultHeight,
-      verticalZoom = state.panel.verticalZoom;
+    const resolution: number = getters.resolution;
+    const maxPulse: number = getters.maxPulse;
+    const defaultHeight = state.panel.defaultHeight;
+    const verticalZoom = state.panel.verticalZoom;
 
     return defaultHeight * verticalZoom * (maxPulse / resolution);
   },
@@ -131,30 +124,27 @@ export const getters: GetterTree<EditorState, RootState> = {
     };
   },
   yPixelToPulse(state: EditorState, getters: EditorGetters): (yPixel: number) => number {
-    const
-      maxPulse: number = getters.maxPulse,
-      heightPixel = getters.heightPixel;
+    const maxPulse: number = getters.maxPulse;
+    const heightPixel = getters.heightPixel;
 
     return (yPixel: number) => maxPulse * (yPixel / heightPixel);
   },
   pulseToYPixel(state: EditorState, getters: EditorGetters): (pulse: number) => number {
-    const
-      maxPulse: number = getters.maxPulse,
-      heightPixel = getters.heightPixel;
+    const maxPulse: number = getters.maxPulse;
+    const heightPixel = getters.heightPixel;
 
     return (pulse: number) => heightPixel * (pulse / maxPulse);
   },
   yPixelToGridPulse(_state: EditorState, getters: EditorGetters): (yPixel: number) => number {
     const state = _state as EditorGetterState;
-    const
-      measurePulsePosList = getters.measurePulsePosList,
-      measurePulseList = measurePulsePosList.map(mp => mp[MP_POS]),
-      yPixelToPulse = getters.yPixelToPulse,
-      subGridPulse = getters.resolution / state.panel.subGrid;
+    const measurePulsePosList = getters.measurePulsePosList;
+    const measurePulseList = measurePulsePosList.map(mp => mp[MP_POS]);
+    const yPixelToPulse = getters.yPixelToPulse;
+    const subGridPulse = getters.resolution / state.panel.subGrid;
 
     return (yPixel: number) => {
       const yPulse = yPixelToPulse(yPixel);
-      
+
       let measureIndex = measurePulseList.binaryFindIndexN(yPulse);
       if (measureIndex < 0) {
         measureIndex = 0;
@@ -171,8 +161,8 @@ export const getters: GetterTree<EditorState, RootState> = {
   previewNoteStyle(_state: EditorState, getters: EditorGetters): Partial<CSSStyleDeclaration> {
     const state = _state as EditorGetterState;
     const laneIndex = state.previewNoteValue.laneIndex;
-    const laneStyles = state.theme.currentTheme.laneStyles 
-    
+    const laneStyles = state.theme.currentTheme.laneStyles ;
+
     // invalid laneIndex -> do not display
     if (laneIndex < 0 || laneIndex >= laneStyles.length) {
       return {
@@ -191,6 +181,5 @@ export const getters: GetterTree<EditorState, RootState> = {
       background: `${laneStyles[laneIndex].noteColor}`,
       display: state.previewNoteValue.isVisible ? 'block' : 'none',
     };
-  }
+  },
 };
-

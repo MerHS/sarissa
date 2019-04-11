@@ -5,8 +5,8 @@
 import * as R from 'ramda';
 import { GetterTree, Module } from 'vuex';
 
-import { GridColors, LaneStyles, LaneTheme } from 'utils/types/themeTypes';
 import { RootState } from 'src/store';
+import { GridColors, LaneStyles, LaneTheme } from 'utils/types/themeTypes';
 import themePresets from './preset';
 
 export interface ThemeState {

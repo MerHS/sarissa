@@ -1,18 +1,15 @@
 /* eslint-disable no-unused-vars */
 
-import { Coord, NoteIndex, Rect, EditMode, Note, LaneIndex } from 'utils/types/scoreTypes';
-import { MP_LEN, MP_POS, ScoreGetters, MeasureFracPos } from './score';
-import Fraction from 'utils/fraction';
+import { Coord, EditMode, LaneIndex, NoteIndex, Rect } from 'utils/types/scoreTypes';
 import { RootState } from '..';
 
-import { theme, ThemeState, ThemeGetters } from './theme';
-import { panel, PanelState  } from './panel';
-import { note, NoteState } from './note';
-import { score, MeasurePulsePos, ScoreState } from './score';
+import { note } from './note';
+import { panel } from './panel';
+import { score } from './score';
+import { theme } from './theme';
 
-import * as R from 'ramda';
-import { MutationTree, ActionTree, GetterTree, Module } from 'vuex';
-import { getters, EditorGetters } from './EditorGetters';
+import { ActionTree, Module, MutationTree } from 'vuex';
+import { EditorGetters, getters } from './EditorGetters';
 
 export interface DragZoneState {
   // ctrl + drag
@@ -35,7 +32,7 @@ export interface EditorState {
   /** value of editMode when drag is started */
   dragStartEditMode: EditMode;
   dragZone: DragZoneState;
-  selectedNotes: Array<NoteIndex>;
+  selectedNotes: NoteIndex[];
   previewNoteValue: PreviewNoteState;
 }
 
@@ -72,9 +69,9 @@ const mutations: MutationTree<EditorState> = {
     }
   },
   dragMove(state: EditorState, coord: Coord) {
-    const [fromX, fromY] = state.dragZone.dragStartPos; // bottom-left point 
+    const [fromX, fromY] = state.dragZone.dragStartPos; // bottom-left point
     const [toX, toY] = coord; // top-right point
-    
+
     const x = (fromX < toX) ? fromX : toX;
     const y = (fromY < toY) ? fromY : toY;
     const w = (fromX < toX) ? (toX - fromX) : (fromX - toX);
@@ -86,7 +83,7 @@ const mutations: MutationTree<EditorState> = {
       // TODO: calculate LN Note
     }
   },
-  dragEnd(state: EditorState, coord: Coord) {
+  dragEnd(state: EditorState) {
     state.dragZone.showDragZone = false;
 
     // TODO: if previewNote != null, commit previewNote to noteManager
@@ -121,15 +118,15 @@ type EditorActions = {
 };
 
 const actions: ActionTree<EditorState, RootState> = {
-  addNote({ state, getters, commit }: EditorActions, coord: Coord) {
-    
+  addNote() {
+    // TODO
   },
-  setPreviewNote({ state, getters, commit }: EditorActions, coord: Coord) {
+  setPreviewNote({ getters, commit }: EditorActions, coord: Coord) {
     const yPixelToGridPulse = getters.yPixelToGridPulse;
 
     const pulse = yPixelToGridPulse(coord[1]);
     const laneIndex = getters.laneXList.binaryFindIndexN(coord[0]);
-    
+
     if (laneIndex != null) {
       commit('setPreviewNoteStyle', { pulse, laneIndex });
     }

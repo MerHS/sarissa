@@ -1,5 +1,5 @@
 <template>
-  <v-layout id="editor-workspace" v-scroll:#editor-workspace="onScroll">
+  <q-page id="editor-workspace" v-scroll:#editor-workspace="onScroll">
     <timeline-canvas :width="widthPixel" :height="heightPixel"/>
     <div id="lane-caption-container" :style="{ color: currGridColors.captionColor }">
       <div v-for="(stylePart, index) in currLaneStyles"
@@ -13,12 +13,13 @@
     </div>
     <!--<timeline-svg/>-->
     <note-wrapper :width="widthPixel" :height="heightPixel"/>
-  </v-layout>
+  </q-page>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 import Component from 'vue-class-component';
+import { mapGetters } from 'vuex';
 
 import NoteWrapper from './NoteWrapper.vue';
 import TimelineCanvas from './TimelineCanvas.vue';

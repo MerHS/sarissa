@@ -1,7 +1,7 @@
 <template>
-  <v-container id="main-container" fluid fill-height>
+  <q-page-container id="main-container" class="flex flex-center">
       <editor-layout></editor-layout>
-  </v-container>
+  </q-page-container>
 </template>
 
 <script lang="ts">
@@ -9,7 +9,7 @@ import { Component, Vue } from 'vue-property-decorator';
 
 import EditorLayout from '../layouts/editor/EditorLayout.vue';
 
-@Component({ 
+@Component({
   components: { EditorLayout },
 })
 export default class MainContainer extends Vue {

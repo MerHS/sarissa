@@ -1,15 +1,15 @@
 /* eslint-disable no-unused-vars */
 
+import { RootState } from 'src/store';
 import { Coord, EditMode, LaneIndex, NoteIndex, Rect } from 'utils/types/scoreTypes';
-import { RootState } from '..';
 
 import { note } from './note';
 import { panel } from './panel';
 import { score } from './score';
 import { theme } from './theme';
 
-import { ActionTree, Module, MutationTree } from 'vuex';
-import { EditorGetters, getters } from './EditorGetters';
+import { ActionTree, Commit, Dispatch, Module, MutationTree } from 'vuex';
+import { EditorGetters, editorGetters } from './EditorGetters';
 
 export interface DragZoneState {
   // ctrl + drag
@@ -36,7 +36,7 @@ export interface EditorState {
   previewNoteValue: PreviewNoteState;
 }
 
-export const state: EditorState = {
+export const editorState: EditorState = {
   editMode: EditMode.SELECT_MODE,
   dragStartEditMode: EditMode.SELECT_MODE,
   dragZone: {
@@ -110,12 +110,12 @@ const mutations: MutationTree<EditorState> = {
   },
 };
 
-type EditorActions = {
-  state: EditorState,
-  getters: EditorGetters,
-  commit: Function,
-  dispatch: Function,
-};
+interface EditorActions {
+  state: EditorState;
+  getters: EditorGetters;
+  commit: Commit;
+  dispatch: Dispatch;
+}
 
 const actions: ActionTree<EditorState, RootState> = {
   addNote() {
@@ -135,8 +135,8 @@ const actions: ActionTree<EditorState, RootState> = {
 
 export const editor: Module<EditorState, RootState> = {
   namespaced: true,
-  state,
-  getters,
+  state: editorState,
+  getters: editorGetters,
   mutations,
   actions,
   modules: {

@@ -35,7 +35,7 @@ interface EditorGetterState extends EditorState {
   score: ScoreState;
 }
 
-export const getters: GetterTree<EditorState, RootState> = {
+export const editorGetters: GetterTree<EditorState, RootState> = {
   laneXList(_state: EditorState): CanvasInfo['laneXList'] {
     const state = _state as EditorGetterState;
     const horizontalZoom = state.panel.horizontalZoom;

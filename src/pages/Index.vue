@@ -1,16 +1,13 @@
 <template>
   <q-page class="flex flex-center">
-    <router-link to="/test">
-      <img alt="Quasar logo" src="~assets/quasar-logo-full.svg">
-    </router-link>
+    <img alt="Quasar logo" src="~assets/quasar-logo-full.svg" />
   </q-page>
 </template>
 
-<style>
-</style>
+<script lang="ts">
+import Vue from 'vue';
+import Component from 'vue-class-component';
 
-<script>
-export default {
-  name: 'PageIndex'
-}
+@Component
+export default class PageIndex extends Vue {}
 </script>

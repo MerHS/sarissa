@@ -1,19 +1,18 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header elevated class="glossy">
+    <q-header elevated>
       <q-toolbar>
         <q-btn
-          flat
-          dense
-          round
-          @click="toolbarClick"
           aria-label="Menu"
-        >
-          <q-icon name="menu" />
-        </q-btn>
+          dense
+          flat
+          icon="menu"
+          round
+          @click="store.toggleLeftDrawer()"
+        />
 
         <q-toolbar-title>
-          Quasar App
+          Quasar - Clean Typescript
         </q-toolbar-title>
 
         <div>Quasar v{{ $q.version }}</div>
@@ -22,21 +21,27 @@
 
     <q-drawer
       v-model="leftDrawerOpen"
+      show-if-above
       bordered
       content-class="bg-grey-2"
     >
       <q-list>
         <q-item-label header>Essential Links</q-item-label>
-        <q-item clickable tag="a" target="_blank" href="http://v1.quasar-framework.org">
+        <q-item clickable tag="a" target="_blank" href="https://quasar.dev">
           <q-item-section avatar>
             <q-icon name="school" />
           </q-item-section>
           <q-item-section>
             <q-item-label>Docs</q-item-label>
-            <q-item-label caption>v1.quasar-framework.org</q-item-label>
+            <q-item-label caption>quasar.dev</q-item-label>
           </q-item-section>
         </q-item>
-        <q-item clickable tag="a" target="_blank" href="https://github.com/quasarframework/">
+        <q-item
+          clickable
+          href="https://github.quasar.dev"
+          tag="a"
+          target="_blank"
+        >
           <q-item-section avatar>
             <q-icon name="code" />
           </q-item-section>
@@ -45,25 +50,40 @@
             <q-item-label caption>github.com/quasarframework</q-item-label>
           </q-item-section>
         </q-item>
-        <q-item clickable tag="a" target="_blank" href="http://chat.quasar-framework.org">
+        <q-item
+          clickable
+          href="https://chat.quasar.dev"
+          tag="a"
+          target="_blank"
+        >
           <q-item-section avatar>
             <q-icon name="chat" />
           </q-item-section>
           <q-item-section>
             <q-item-label>Discord Chat Channel</q-item-label>
-            <q-item-label caption>chat.quasar-framework.org</q-item-label>
+            <q-item-label caption>chat.quasar.dev</q-item-label>
           </q-item-section>
         </q-item>
-        <q-item clickable tag="a" target="_blank" href="https://forum.quasar-framework.org">
+        <q-item
+          clickable
+          href="https://forum.quasar.dev"
+          tag="a"
+          target="_blank"
+        >
           <q-item-section avatar>
             <q-icon name="record_voice_over" />
           </q-item-section>
           <q-item-section>
             <q-item-label>Forum</q-item-label>
-            <q-item-label caption>forum.quasar-framework.org</q-item-label>
+            <q-item-label caption>forum.quasar.dev</q-item-label>
           </q-item-section>
         </q-item>
-        <q-item clickable tag="a" target="_blank" href="https://twitter.com/quasarframework">
+        <q-item
+          clickable
+          href="https://twitter.quasar.dev"
+          tag="a"
+          target="_blank"
+        >
           <q-item-section avatar>
             <q-icon name="rss_feed" />
           </q-item-section>
@@ -72,33 +92,48 @@
             <q-item-label caption>@quasarframework</q-item-label>
           </q-item-section>
         </q-item>
+        <q-item
+          clickable
+          href="https://facebook.quasar.dev"
+          tag="a"
+          target="_blank"
+        >
+          <q-item-section avatar>
+            <q-icon name="public" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>Facebook</q-item-label>
+            <q-item-label caption>@QuasarFramework</q-item-label>
+          </q-item-section>
+        </q-item>
       </q-list>
     </q-drawer>
 
-    <router-view />
+    <q-page-container>
+      <router-view />
+    </q-page-container>
   </q-layout>
 </template>
 
 <script lang="ts">
-import { openURL } from 'quasar';
-import { Component, Prop, Vue } from 'vue-property-decorator';
+// Vue
+import Vue from 'vue';
+import Component from 'vue-class-component';
+
+// Store modules
+import { getModule } from 'vuex-module-decorators';
+import LayoutStoreModule from './LayoutStoreModule';
 
 @Component
 export default class MyLayout extends Vue {
-  @Prop({ default: 'MyLayout' }) readonly name!: string;
+  store = getModule(LayoutStoreModule);
 
-  leftDrawerOpen = this.$q.platform.is.desktop;
-
-  openURL(url: string) {
-    openURL(url);
+  get leftDrawerOpen() {
+    return this.store.leftDrawerOpen;
   }
 
-  toolbarClick() {
-    console.log(this.$q.version);
-    this.leftDrawerOpen = !this.leftDrawerOpen;
+  set leftDrawerOpen(value: boolean) {
+    this.store.setLeftDrawerOpen(value);
   }
 }
 </script>
-
-<style>
-</style>

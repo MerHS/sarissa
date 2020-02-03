@@ -1,20 +1,13 @@
 {
-    "compilerOptions": {
-        "sourceMap": true,
-        "target": "es2015",
-        "strict": true,
-        "importHelpers": true,
-        "experimentalDecorators": true,
-        "module": "es2015",
-        "moduleResolution": "node",
-        "baseUrl": ".",
-        "paths": {
-            "utils/*": ["src/utils/*"],
-            "store/*": ["src/store/*"]
-        }
-    },
-    "include": [
-        "./src/**/*",
-        "./@types/**/*"
-    ]
+  "compilerOptions": {
+    "allowJs": true,
+    "sourceMap": true,
+    "target": "es6",
+    "strict": true,
+    "experimentalDecorators": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "baseUrl": "."
+  },
+  "exclude": ["node_modules"]
 }

@@ -1,14 +1,8 @@
 {
-  "@quasar/testing-unit-jest": {
-    "babel": "babelrc",
-    "options": [
-      "scripts",
-      "SFC"
-    ]
-  },
-  "@quasar/testing": {
-    "harnesses": [
-      "unit-jest"
-    ]
+  "@quasar/typescript": {
+    "webpack": "plugin",
+    "rename": true,
+    "vscode": true,
+    "prettier": true
   }
 }

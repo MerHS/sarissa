@@ -1,28 +1,46 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
+  <q-layout view="hHh lpR fFr">
+    <q-header elevated class="bg-primary text-white">
       <q-toolbar>
+        <q-btn
+          aria-label="Option"
+          dense
+          flat
+          icon="settings"
+          round
+        />
+
+        <q-toolbar-title>
+          SARISSA - Rhythmin Editor
+        </q-toolbar-title>
+
+        <div>Quasar v{{ $q.version }}</div>
+
         <q-btn
           aria-label="Menu"
           dense
           flat
           icon="menu"
           round
-          @click="store.toggleLeftDrawer()"
+          class="q-ml-xs"
+          @click="store.toggleRightDrawer()"
         />
-
-        <q-toolbar-title>
-          Quasar - Clean Typescript
-        </q-toolbar-title>
-
-        <div>Quasar v{{ $q.version }}</div>
       </q-toolbar>
+
+      <q-tabs align="left">
+        <q-route-tab to="/page1" label="Page One" />
+        <q-route-tab to="/page2" label="Page Two" />
+        <q-route-tab to="/page3" label="Page Three" />
+      </q-tabs>
     </q-header>
 
     <q-drawer
-      v-model="leftDrawerOpen"
-      show-if-above
-      bordered
+      v-model="rightDrawerOpen"
+      :show-if-above="false"
+      side="right"
+      overlay 
+      behavior="desktop"
+      elevated
       content-class="bg-grey-2"
     >
       <q-list>
@@ -36,82 +54,21 @@
             <q-item-label caption>quasar.dev</q-item-label>
           </q-item-section>
         </q-item>
-        <q-item
-          clickable
-          href="https://github.quasar.dev"
-          tag="a"
-          target="_blank"
-        >
-          <q-item-section avatar>
-            <q-icon name="code" />
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>Github</q-item-label>
-            <q-item-label caption>github.com/quasarframework</q-item-label>
-          </q-item-section>
-        </q-item>
-        <q-item
-          clickable
-          href="https://chat.quasar.dev"
-          tag="a"
-          target="_blank"
-        >
-          <q-item-section avatar>
-            <q-icon name="chat" />
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>Discord Chat Channel</q-item-label>
-            <q-item-label caption>chat.quasar.dev</q-item-label>
-          </q-item-section>
-        </q-item>
-        <q-item
-          clickable
-          href="https://forum.quasar.dev"
-          tag="a"
-          target="_blank"
-        >
-          <q-item-section avatar>
-            <q-icon name="record_voice_over" />
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>Forum</q-item-label>
-            <q-item-label caption>forum.quasar.dev</q-item-label>
-          </q-item-section>
-        </q-item>
-        <q-item
-          clickable
-          href="https://twitter.quasar.dev"
-          tag="a"
-          target="_blank"
-        >
-          <q-item-section avatar>
-            <q-icon name="rss_feed" />
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>Twitter</q-item-label>
-            <q-item-label caption>@quasarframework</q-item-label>
-          </q-item-section>
-        </q-item>
-        <q-item
-          clickable
-          href="https://facebook.quasar.dev"
-          tag="a"
-          target="_blank"
-        >
-          <q-item-section avatar>
-            <q-icon name="public" />
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>Facebook</q-item-label>
-            <q-item-label caption>@QuasarFramework</q-item-label>
-          </q-item-section>
-        </q-item>
+        
       </q-list>
     </q-drawer>
 
     <q-page-container>
       <router-view />
     </q-page-container>
+
+    <q-footer bordered class="bg-grey-8 text-white">
+      <q-toolbar>
+        <q-icon :name="editModeIcon"/>
+        <q-space></q-space>
+        &copy; 2020 KINETC
+      </q-toolbar>
+    </q-footer>
   </q-layout>
 </template>
 
@@ -128,12 +85,16 @@ import LayoutStoreModule from './LayoutStoreModule';
 export default class MyLayout extends Vue {
   store = getModule(LayoutStoreModule);
 
-  get leftDrawerOpen() {
-    return this.store.leftDrawerOpen;
+  get rightDrawerOpen() {
+    return this.store.rightDrawerOpen;
   }
 
-  set leftDrawerOpen(value: boolean) {
-    this.store.setLeftDrawerOpen(value);
+  set rightDrawerOpen(value: boolean) {
+    this.store.setRightDrawerOpen(value);
+  }
+
+  get editModeIcon(): string {
+    return 'edit';
   }
 }
 </script>

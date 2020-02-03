@@ -8,20 +8,20 @@ import Store from '../store/index';
   store: Store
 })
 export default class LayoutStoreModule extends VuexModule {
-  public leftDrawerOpen = false;
+  public rightDrawerOpen = false;
 
   @Mutation
-  public SET_LEFT_DRAWER_OPEN(value: boolean) {
-    this.leftDrawerOpen = value;
+  public SET_RIGHT_DRAWER_OPEN(value: boolean) {
+    this.rightDrawerOpen = value;
   }
 
   @Action
-  public setLeftDrawerOpen(value: boolean) {
-    this.SET_LEFT_DRAWER_OPEN(value);
+  public setRightDrawerOpen(value: boolean) {
+    this.SET_RIGHT_DRAWER_OPEN(value);
   }
 
   @Action
-  public toggleLeftDrawer() {
-    this.SET_LEFT_DRAWER_OPEN(!this.leftDrawerOpen);
+  public toggleRightDrawer() {
+    this.SET_RIGHT_DRAWER_OPEN(!this.rightDrawerOpen);
   }
 }

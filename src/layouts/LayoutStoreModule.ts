@@ -1,12 +1,6 @@
 import { Action, Module, Mutation, VuexModule } from 'vuex-module-decorators';
-import Store from '../store/index';
 
-@Module({
-  dynamic: true,
-  name: 'layout',
-  namespaced: true,
-  store: Store
-})
+@Module
 export default class LayoutStoreModule extends VuexModule {
   public rightDrawerOpen = false;
 

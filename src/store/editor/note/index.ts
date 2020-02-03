@@ -2,12 +2,10 @@
  * editor/note - default / custom note settings
  * This state should be able to import and export.
  */
-import { Module } from 'vuex';
+import { defineModule } from 'direct-vuex';
 
 import { ColorString } from '../../../utils/types/themeTypes';
 import { green, red, white, cyan, colorStr } from '../../../utils/themeConst';
-import { RootState } from '../..';
-
 
 export interface NoteState {
   noteHeight: number;
@@ -27,6 +25,7 @@ const state: NoteState = {
   borderColorOnMouseOverLN: cyan,
 };
 
-export const note: Module<NoteState, RootState> = {
+export default defineModule({
+  namespaced: true,
   state,
-};
+});

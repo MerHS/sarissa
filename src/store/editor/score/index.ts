@@ -1,6 +1,9 @@
 /**  
  * editor/score - score settings
  */
+import * as _ from 'lodash';
+import * as R from 'ramda';
+import { defineModule } from 'direct-vuex';
 
 import {
   Beat, EventType, NoteIndex, NoteType, ScoreMetaData,
@@ -8,11 +11,7 @@ import {
 } from '../../../utils/types/scoreTypes';
 import { NoteManager } from '../../../utils/noteUtil';
 import Fraction from '../../../utils/fraction';
-import { RootState } from '../..';
 
-import * as _ from 'lodash';
-import R from 'ramda';
-import { MutationTree, ActionTree, GetterTree, Module } from 'vuex';
 /**
  * measureNo is zero-starting
  * [measureNo, meterPulseLength, measurePulsePosition]
@@ -55,14 +54,14 @@ export interface ScoreGetters {
   pulseToMeasureNo: (pulse: number) => number;
 
   /** list of [Measure Number, Pulse Length of Meter, Pulse Position of Measure] of each TimeSignatures */
-  timeSignaturePulseList: Array<MeasurePulsePos>;
+  timeSignaturePulseList: MeasurePulsePos[];
   /** list of [Measure Number, Pulse Length of Meter, Pulse Position of Measure] of every Measure */
-  measurePulsePosList: Array<MeasurePulsePos>;
+  measurePulsePosList: MeasurePulsePos[];
   /** list of [Measure Number, Fraction Length of Meter, Fraction Position of Measure] of every Measure */
-  measureFracPosList: Array<MeasureFracPos>;
+  measureFracPosList: MeasureFracPos[];
 }
 
-const getters: GetterTree<ScoreState, RootState> = {
+const getters = {
   resolution(state: ScoreState): number {
     return state.noteManager.resolution;
   },
@@ -90,23 +89,23 @@ const getters: GetterTree<ScoreState, RootState> = {
     return lastPulse ? lastPulse[MP_LEN] + lastPulse[MP_POS] : 0;
   },
 
-  timeSignaturePulseList(state: ScoreState, getters: ScoreGetters): Array<MeasurePulsePos> {
+  timeSignaturePulseList(state: ScoreState, getters: ScoreGetters): MeasurePulsePos[] {
     const timeSignatures = state.noteManager.timeSignatures;
     const measureNoList = timeSignatures.map(ts => ts.measureNo);
     const meterLenList = timeSignatures.map(
       ts => (ts.meter[0] * getters.resolution) / ts.meter[1],
     );
 
-    const noLenList: Array<[number, number]> = _.zip(measureNoList, meterLenList) as Array<[number, number]>;
+    const noLenList: [number, number][] = _.zip(measureNoList, meterLenList) as [number, number][];
     const noLenTwins = R.aperture(2, noLenList); // Array<[[no, len], [no, len]]>;
 
-    const meterPosList: Array<number> = R.scan(
+    const meterPosList: number[] = R.scan(
       (acc, [prev, next]) => acc + ((next[MP_NO] - prev[MP_NO]) * prev[MP_LEN]), 0, noLenTwins);
 
     return R.zipWith(([no, len], pos) => [no, len, pos] as MeasurePulsePos, noLenList, meterPosList);
   },
 
-  measurePulsePosList(state: ScoreState, getters: ScoreGetters): Array<MeasurePulsePos> {
+  measurePulsePosList(state: ScoreState, getters: ScoreGetters): MeasurePulsePos[] {
     const resolution = getters.resolution;
     const measureFracPosList = getters.measureFracPosList;
 
@@ -114,22 +113,22 @@ const getters: GetterTree<ScoreState, RootState> = {
       [no, len.mulInt(resolution).value(), pos.mulInt(resolution).value()] as MeasurePulsePos);
   },
 
-  measureFracPosList(state: ScoreState, getters: ScoreGetters): Array<MeasureFracPos> {
+  measureFracPosList(state: ScoreState, getters: ScoreGetters): MeasureFracPos[] {
     const maxMeasureNo = getters.maxMeasureNo;
     const timeSignatures = state.noteManager.timeSignatures;
     const measureNoList = timeSignatures.map(ts => ts.measureNo);
     const meterFracList = timeSignatures.map(ts => Fraction.ofArr(ts.meter));
 
-    const noFracList: Array<[number, Fraction]> = _.zip(measureNoList, meterFracList) as Array<[number, Fraction]>;
+    const noFracList: [number, Fraction][] = _.zip(measureNoList, meterFracList) as [number, Fraction][];
     const noLenTwins = R.aperture(2, noFracList); // Array<[[no, frac], [no, frac]]>;
 
-    const meterFracPosList: Array<Fraction> = R.scan(
+    const meterFracPosList: Fraction[] = R.scan(
       (acc, [prev, next]) => acc.add(prev[1].mulInt(next[0] - prev[0])),
       Fraction.ofInt(0),
       noLenTwins,
     );
 
-    const tsFraclist: Array<MeasureFracPos> =
+    const tsFraclist: MeasureFracPos[] =
       R.zipWith(([no, len], pos) => [no, len, pos] as MeasureFracPos, noFracList, meterFracPosList);
 
     let lastFrac: MeasureFracPos | undefined = R.last(tsFraclist);
@@ -175,7 +174,7 @@ const getters: GetterTree<ScoreState, RootState> = {
   },
 };
 
-const mutations: MutationTree<ScoreState> = {
+const mutations = {
   SET_MAIN_BPM(state: ScoreState, bpm: number) {
     state.noteManager.setMainBpm(bpm);
   },
@@ -193,8 +192,9 @@ const mutations: MutationTree<ScoreState> = {
   },
 };
 
-export const score: Module<ScoreState, RootState> = {
+export default defineModule({
+  namespaced: true,
   state,
   getters,
   mutations,
-};
+});

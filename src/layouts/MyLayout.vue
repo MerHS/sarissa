@@ -66,7 +66,7 @@
       <q-toolbar>
         <q-icon :name="editModeIcon"/>
         <q-space></q-space>
-        &copy; 2020 KINETC
+        &copy; 2020 KINETC / v{{ sarissaVersion }}
       </q-toolbar>
     </q-footer>
   </q-layout>
@@ -76,18 +76,25 @@
 // Vue
 import Vue from 'vue';
 import Component from 'vue-class-component';
+import { store } from '../store';
 
 // Store modules
-import { getModule } from 'vuex-module-decorators';
-import LayoutStoreModule from './LayoutStoreModule';
+// import { getModule } from 'vuex-module-decorators';
+// import LayoutStoreModule from './LayoutStoreModule';
 
 @Component
 export default class MyLayout extends Vue {
-  store = getModule(LayoutStoreModule)
+  // store = getModule(LayoutStoreModule)
   rightDrawerOpen = false
 
   toggleRightDrawer() {
     this.rightDrawerOpen = !this.rightDrawerOpen;
+    // console.log(store.state.editor.editMode);
+    // store.commit.editor.dragStart({ coord: [3, 5], isExclusive: false });
+  }
+
+  get sarissaVersion() {
+    return store.state.version;
   }
 
   // get rightDrawerOpen() {

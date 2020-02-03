@@ -2,16 +2,16 @@
  * editor/theme - style settings of timeline
  * This state should be able to import and export.
  */
-import R from 'ramda';
-import { GetterTree, Module } from 'vuex';
+import * as R from 'ramda';
+import { defineModule } from 'direct-vuex';
 
 import { GridColors, LaneStyles, LaneTheme } from '../../../utils/types/themeTypes';
 import themePresets from './preset';
-import { RootState } from '../..';
+
 
 export interface ThemeState {
-  currentTheme: LaneTheme,
-  usePreset: boolean
+  currentTheme: LaneTheme;
+  usePreset: boolean;
 }
 
 export const state: ThemeState = {
@@ -20,12 +20,12 @@ export const state: ThemeState = {
 };
 
 export interface ThemeGetters {
-  currGridColors: GridColors,
-  currLaneStyles: LaneStyles,
-  totalWidth: number,
+  currGridColors: GridColors;
+  currLaneStyles: LaneStyles;
+  totalWidth: number;
 }
 
-export const getters: GetterTree<ThemeState, RootState> = {
+export const getters = {
   currGridColors(state: ThemeState): GridColors {
     return state.currentTheme.gridColors;
   },
@@ -37,7 +37,8 @@ export const getters: GetterTree<ThemeState, RootState> = {
   },
 };
 
-export const theme: Module<ThemeState, RootState> = {
+export default defineModule({
+  namespaced: true,
   state,
   getters,
-};
+});

@@ -1,9 +1,7 @@
 /**  
  * editor/panel - grid settings of default panel
  */
-
-import { MutationTree, GetterTree, Module } from 'vuex';
-import { RootState } from '../..';
+import { defineModule } from 'direct-vuex';
 
 export interface PanelState {
   panelCount: number,
@@ -31,13 +29,14 @@ const state: PanelState = {
 //   'panelCount', 'mainGrid', 'subGrid', 'verticalZoom', 'horizontalZoom', 'defaultHeight',
 // ];
 
-const mutations: MutationTree<PanelState> = {
+const mutations = {
   assignPanelState(state: PanelState, payload: Partial<PanelState>) {
     Object.assign(state, payload);
   },
 };
 
-export const panel: Module<PanelState, RootState> = {
+export default defineModule({
+  namespaced: true,
   state,
   mutations,
-};
+});

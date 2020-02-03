@@ -1,17 +1,19 @@
+/* eslint-disable @typescript-eslint/no-use-before-define */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-unused-vars */
+import { defineModule } from 'direct-vuex';
 
 import { Coord, NoteIndex, Rect, EditMode, Note, LaneIndex } from '../../utils/types/scoreTypes';
 import { MP_LEN, MP_POS, ScoreGetters, MeasureFracPos } from './score';
 import Fraction from '../../utils/fraction';
-import { RootState } from '..';
 
-import { theme, ThemeState, ThemeGetters } from './theme';
-import { panel, PanelState  } from './panel';
-import { note, NoteState } from './note';
-import { score, MeasurePulsePos, ScoreState } from './score';
+import theme, { ThemeState, ThemeGetters } from './theme';
+import panel, { PanelState  } from './panel';
+import note, { NoteState } from './note';
+import score, { MeasurePulsePos, ScoreState } from './score';
 import * as R from 'ramda';
-import { MutationTree, ActionTree, GetterTree, Module } from 'vuex';
 import { getters, EditorGetters } from './EditorGetters';
+import { moduleActionContext, moduleGetterContext } from '../';
 
 export interface DragZoneState {
   // ctrl + drag
@@ -55,7 +57,7 @@ export const state: EditorState = {
   },
 };
 
-const mutations: MutationTree<EditorState> = {
+const mutations = {
   dragStart(state: EditorState, payload: { coord: Coord, isExclusive: boolean }) {
     state.dragStartEditMode = state.editMode;
 
@@ -112,30 +114,24 @@ const mutations: MutationTree<EditorState> = {
   },
 };
 
-type EditorActions = {
-  state: EditorState,
-  getters: EditorGetters,
-  commit: Function,
-  dispatch: Function,
-};
-
-const actions: ActionTree<EditorState, RootState> = {
-  addNote({ state, getters, commit }: EditorActions, coord: Coord) {
+const actions = {
+  addNote(ctx: any, coord: Coord) {
     
   },
-  setPreviewNote({ state, getters, commit }: EditorActions, coord: Coord) {
+  setPreviewNote(ctx: any, coord: Coord) {
+    const { getters, commit } = editorActionContext(ctx);
     const yPixelToGridPulse = getters.yPixelToGridPulse;
 
     const pulse = yPixelToGridPulse(coord[1]);
     const laneIndex = getters.laneXList.binaryFindFloorIndex(coord[0]);
     
     if (laneIndex != null) {
-      commit('setPreviewNoteStyle', { pulse, laneIndex });
+      commit.setPreviewNoteStyle({ pulse, laneIndex });
     }
   },
 };
 
-export const editor: Module<EditorState, RootState> = {
+const editor = defineModule({
   namespaced: true,
   state,
   getters,
@@ -145,6 +141,10 @@ export const editor: Module<EditorState, RootState> = {
     theme,
     panel,
     note,
-    score,
-  },
-};
+    score
+  }
+});
+
+export default editor;
+export const editorActionContext = (context: any) => moduleActionContext(context, editor)
+export const editorGetterContext = (args: [any, any, any, any]) => moduleGetterContext(args, editor)

@@ -16,6 +16,7 @@
   "dependencies": {
     "@quasar/extras": "^1.5.0",
     "axios": "^0.19.2",
+    "direct-vuex": "^0.10.2",
     "lodash": "^4.17.15",
     "quasar": "^1.8.5",
     "ramda": "^0.27.0",
@@ -39,12 +40,14 @@
     "electron": "^7.1.11",
     "electron-debug": "^3.0.0",
     "electron-devtools-installer": "^2.2.4",
+    "electron-packager": "^14.1.1",
     "eslint": "^6.7.0",
     "eslint-config-prettier": "^6.7.0",
     "eslint-loader": "^3.0.2",
     "eslint-plugin-vue": "^6.0.1",
     "typescript": "^3.7.2",
-    "vuex-module-decorators": "^0.16.1"
+    "vuex-module-decorators": "^0.16.1",
+    "webpack": "^4.41.5"
   },
   "engines": {
     "node": ">= 8.9.0",

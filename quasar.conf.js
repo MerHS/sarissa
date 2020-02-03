@@ -1,5 +1,6 @@
 // Configuration for your app
 // https://quasar.dev/quasar-cli/quasar-conf-js
+const path = require('path');
 
 module.exports = function(ctx) {
   return {
@@ -96,6 +97,10 @@ module.exports = function(ctx) {
             formatter: require('eslint').CLIEngine.getFormatter('stylish')
           }
         });
+        cfg.resolve.alias = {
+          ...cfg.resolve.alias,
+          'utils': path.resolve(__dirname, './src/utils'),
+        }
       }
     },
 

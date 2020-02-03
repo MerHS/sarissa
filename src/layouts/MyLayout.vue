@@ -23,7 +23,7 @@
           icon="menu"
           round
           class="q-ml-xs"
-          @click="store.toggleRightDrawer()"
+          @click="toggleRightDrawer"
         />
       </q-toolbar>
 
@@ -83,15 +83,20 @@ import LayoutStoreModule from './LayoutStoreModule';
 
 @Component
 export default class MyLayout extends Vue {
-  store = getModule(LayoutStoreModule);
+  store = getModule(LayoutStoreModule)
+  rightDrawerOpen = false
 
-  get rightDrawerOpen() {
-    return this.store.rightDrawerOpen;
+  toggleRightDrawer() {
+    this.rightDrawerOpen = !this.rightDrawerOpen;
   }
 
-  set rightDrawerOpen(value: boolean) {
-    this.store.setRightDrawerOpen(value);
-  }
+  // get rightDrawerOpen() {
+  //   return this.store.rightDrawerOpen;
+  // }
+
+  // set rightDrawerOpen(value: boolean) {
+  //   this.store.setRightDrawerOpen(value);
+  // }
 
   get editModeIcon(): string {
     return 'edit';

@@ -5,6 +5,7 @@
 </template>
 
 <script lang="ts">
+import './utils/sortedList';
 import Vue from 'vue';
 import Component from 'vue-class-component';
 

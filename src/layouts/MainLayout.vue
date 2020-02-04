@@ -28,9 +28,9 @@
       </q-toolbar>
 
       <q-tabs align="left">
-        <q-route-tab to="/page1" label="Page One" />
-        <q-route-tab to="/page2" label="Page Two" />
-        <q-route-tab to="/page3" label="Page Three" />
+        <q-route-tab to="/editor/test1" label="Page One" />
+        <q-route-tab to="/editor/test2" label="Page Two" />
+        <q-route-tab to="/editor/test3" label="Page Three" />
       </q-tabs>
     </q-header>
 
@@ -73,37 +73,21 @@
 </template>
 
 <script lang="ts">
-// Vue
 import Vue from 'vue';
 import Component from 'vue-class-component';
-import { store } from '../store';
-
-// Store modules
-// import { getModule } from 'vuex-module-decorators';
-// import LayoutStoreModule from './LayoutStoreModule';
+import { store } from '@store/index';
 
 @Component
 export default class MyLayout extends Vue {
-  // store = getModule(LayoutStoreModule)
   rightDrawerOpen = false
 
   toggleRightDrawer() {
     this.rightDrawerOpen = !this.rightDrawerOpen;
-    // console.log(store.state.editor.editMode);
-    // store.commit.editor.dragStart({ coord: [3, 5], isExclusive: false });
   }
 
   get sarissaVersion() {
     return store.state.version;
   }
-
-  // get rightDrawerOpen() {
-  //   return this.store.rightDrawerOpen;
-  // }
-
-  // set rightDrawerOpen(value: boolean) {
-  //   this.store.setRightDrawerOpen(value);
-  // }
 
   get editModeIcon(): string {
     return 'edit';

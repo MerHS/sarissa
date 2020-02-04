@@ -49,6 +49,7 @@ module.exports = function(ctx) {
         'QLayout',
         'QHeader',
         'QDrawer',
+        'QPageScroller',
         'QPageContainer',
         'QPage',
         'QToolbar',
@@ -99,7 +100,8 @@ module.exports = function(ctx) {
         });
         cfg.resolve.alias = {
           ...cfg.resolve.alias,
-          'utils': path.resolve(__dirname, './src/utils'),
+          '@utils': path.resolve(__dirname, './src/utils'),
+          '@store': path.resolve(__dirname, './src/store')
         }
       }
     },

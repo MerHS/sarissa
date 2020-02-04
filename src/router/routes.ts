@@ -3,8 +3,17 @@ import { RouteConfig } from 'vue-router';
 const routes: RouteConfig[] = [
   {
     path: '/',
-    component: () => import('layouts/MyLayout.vue'),
-    children: [{ path: '', component: () => import('pages/Index.vue') }]
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { 
+        path: '', 
+        component: () => import('components/pages/Index.vue') 
+      }, 
+      {
+        path: 'editor/:projectId',
+        component: () => import('components/editor/EditorLayout.vue')
+      }
+    ]
   }
 ];
 
@@ -12,7 +21,7 @@ const routes: RouteConfig[] = [
 if (process.env.MODE !== 'ssr') {
   routes.push({
     path: '*',
-    component: () => import('pages/Error404.vue')
+    component: () => import('components/pages/Error404.vue')
   });
 }
 

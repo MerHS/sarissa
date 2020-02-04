@@ -18,5 +18,9 @@ yarn-error.log*
 *.ntvs*
 *.njsproj
 *.sln
-.yarn
-.pnp.js
+
+# yarn 2
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.pnp.*

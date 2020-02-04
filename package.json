@@ -15,7 +15,6 @@
   },
   "dependencies": {
     "@quasar/extras": "^1.5.0",
-    "@yarnpkg/pnpify": "^2.0.0-rc.17",
     "axios": "^0.19.2",
     "direct-vuex": "^0.10.2",
     "lodash": "^4.17.15",
@@ -52,7 +51,7 @@
   "engines": {
     "node": ">= 8.9.0",
     "npm": ">= 5.6.0",
-    "yarn": ">= 2.0.0-rc.27"
+    "yarn": ">= 1.6.0"
   },
   "browserslist": [
     "last 1 version, not dead, ie >= 11"

@@ -51,6 +51,7 @@ module.exports = function(ctx) {
         'QDrawer',
         'QPageScroller',
         'QPageContainer',
+        'QPageSticky',
         'QPage',
         'QToolbar',
         'QToolbarTitle',

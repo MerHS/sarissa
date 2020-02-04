@@ -1,7 +1,16 @@
 <template>
-  <q-page @scroll.passive="onScroll">
+  <q-page @scroll="onScroll">
     <timeline-canvas :width="widthPixel" :height="heightPixel"/>
-    <div id="lane-caption-container" :style="{ color: currGridColors.captionColor }">
+    
+    <!--<timeline-svg/>-->
+    <note-wrapper :width="widthPixel" :height="heightPixel"/>
+
+      <!-- place QPageScroller at end of page -->
+    <q-page-scroller position="bottom-right" :scroll-offset="150" :offset="[18, 18]">
+      <q-btn fab icon="keyboard_arrow_up" color="accent" />
+    </q-page-scroller>
+
+    <q-page-sticky expand position="top" :style="{ color: currGridColors.captionColor }">
       <div v-for="(stylePart, index) in currLaneStyles"
         :key="index" class="lane-caption caption" :style="{ 
           left: `${ laneXList[index] + 2 }px`,
@@ -10,14 +19,7 @@
         }">
         {{ stylePart.caption }}
       </div>
-    </div>
-    <!--<timeline-svg/>-->
-    <note-wrapper :width="widthPixel" :height="heightPixel"/>
-
-      <!-- place QPageScroller at end of page -->
-    <q-page-scroller position="top-right" :scroll-offset="150" :offset="[18, 18]">
-      <q-btn fab icon="keyboard_arrow_down" color="accent" />
-    </q-page-scroller>
+    </q-page-sticky>
   </q-page>
 </template>
 

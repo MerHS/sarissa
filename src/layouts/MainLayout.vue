@@ -75,11 +75,14 @@
 <script lang="ts">
 import Vue from 'vue';
 import Component from 'vue-class-component';
+
 import { store } from '@store/index';
+import { EditMode } from '@utils/types/scoreTypes';
 
 @Component
 export default class MyLayout extends Vue {
   rightDrawerOpen = false
+  saveValid = false
 
   toggleRightDrawer() {
     this.rightDrawerOpen = !this.rightDrawerOpen;
@@ -89,8 +92,21 @@ export default class MyLayout extends Vue {
     return store.state.version;
   }
 
+  get editMode() : EditMode {
+    return store.state.editor.editMode;
+  }
+
   get editModeIcon(): string {
-    return 'edit';
+    switch (this.editMode) {
+      case EditMode.TIME_SELECT_MODE:
+        return 'timer';
+      case EditMode.SELECT_MODE:
+        return 'crop'; 
+      case EditMode.WRITE_MODE:
+        return 'edit'
+      default: 
+        return 'edit';
+    }
   }
 }
 </script>

@@ -93,8 +93,7 @@ export default class NoteWrapper extends Vue {
   @Watch('editMode')
   onEditModeChange(newVal: EditMode) {
     if (newVal === EditMode.WRITE_MODE) {
-
-      store.dispatch.editor.setPreviewNote([this.dragPosX, this.height - this.dragPosY);
+      store.dispatch.editor.setPreviewNote([this.dragPosX, this.height - this.dragPosY]);
     }
   }
 
